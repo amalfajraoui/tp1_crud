@@ -14,3 +14,5 @@ Application Full-Stack conteneurisée avec Docker Compose dans un environnement 
 `docker compose down`
 ## Collaboration Git
 Workflow collaboratif avec branches dédiées et Pull Requests révisées avant fusion sur `main`.
+
+- Test push/pull verified via WSL
