@@ -12,3 +12,5 @@ Application Full-Stack conteneurisée avec Docker Compose dans un environnement 
 
 ## Arrêt du projet
 `docker compose down`
+## Collaboration Git
+Workflow collaboratif avec branches dédiées et Pull Requests révisées avant fusion sur `main`.
