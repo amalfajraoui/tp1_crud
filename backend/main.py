@@ -17,10 +17,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
 def get_connection():
     return psycopg.connect(
-        "host=localhost dbname=tp1_crud user=tp1_user password=tp1pass123",
+        "host=db dbname=tp1 user=tp1 password=tp1pass",
         row_factory=dict_row
     )
 

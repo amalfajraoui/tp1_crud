@@ -1,0 +1,36 @@
+services:
+  db:
+    image: postgres:17-alpine
+    container_name: crud-db
+    environment:
+      - POSTGRES_DB=tp1
+      - POSTGRES_USER=tp1
+      - POSTGRES_PASSWORD=tp1pass
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  backend:
+    build: ./backend
+    container_name: crud-backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+    environment:
+      - DATABASE_URL=postgres://tp1:tp1pass@db:5432/tp1
+    depends_on:
+      - db
+
+  frontend:
+    build: ./frontend
+    container_name: crud-frontend
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    environment:
+      - VITE_API_URL=http://localhost:8000
+
+volumes:
+  pgdata:
