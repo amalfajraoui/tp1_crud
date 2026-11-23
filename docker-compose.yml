@@ -8,6 +8,8 @@ services:
       - POSTGRES_PASSWORD=tp1pass
     volumes:
       - pgdata:/var/lib/postgresql/data
+    networks:
+      - tp1-net
 
   backend:
     build: ./backend
@@ -20,6 +22,8 @@ services:
       - DATABASE_URL=postgres://tp1:tp1pass@db:5432/tp1
     depends_on:
       - db
+    networks:
+      - tp1-net
 
   frontend:
     build: ./frontend
@@ -31,7 +35,41 @@ services:
       - /app/node_modules
     environment:
       - VITE_API_URL=http://localhost:8000
-    
+    depends_on:
+      - backend
+    networks:
+      - tp1-net
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: crud-prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    depends_on:
+      - backend
+    networks:
+      - tp1-net
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: crud-grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      - grafana-data:/var/lib/grafana
+    depends_on:
+      - prometheus
+    networks:
+      - tp1-net
 
 volumes:
   pgdata:
+  grafana-data:
+
+networks:
+  tp1-net:

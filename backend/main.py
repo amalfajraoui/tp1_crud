@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import psycopg
 from psycopg.rows import dict_row
+from prometheus_fastapi_instrumentator import Instrumentator
 
 app = FastAPI()
 
@@ -16,6 +17,10 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# تفعيل جمع metrics وتقديمها على المسار /metrics
+Instrumentator().instrument(app).expose(app)
+
 
 def get_connection():
     return psycopg.connect(
