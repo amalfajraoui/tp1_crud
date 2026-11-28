@@ -16,3 +16,4 @@ Application Full-Stack conteneurisée avec Docker Compose dans un environnement 
 Workflow collaboratif avec branches dédiées et Pull Requests révisées avant fusion sur `main`.
 
 - Test push/pull verified via WSL
+# Jenkins automatic build test
