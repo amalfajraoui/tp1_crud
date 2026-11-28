@@ -6,6 +6,7 @@ services:
       - POSTGRES_DB=tp1
       - POSTGRES_USER=tp1
       - POSTGRES_PASSWORD=tp1pass
+
     volumes:
       - pgdata:/var/lib/postgresql/data
     networks:
@@ -67,9 +68,23 @@ services:
     networks:
       - tp1-net
 
+  jenkins:
+    build: ./jenkins
+    container_name: crud-jenkins
+    user: root
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+    volumes:
+      - jenkins-data:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - tp1-net
+
 volumes:
   pgdata:
   grafana-data:
+  jenkins-data:
 
 networks:
   tp1-net:
